@@ -1,8 +1,13 @@
 const admin = require('firebase-admin');
 const express = require('express');
 const hbs = require('hbs');
+var app = express();
+hbs.registerPartials(__dirname + '/views/partials')
+app.set('view engine', 'hbs');
+var Handlebars = require('hbs');
 
-var serviceAccount = require("C://Users//swetha guptha//Desktop//Elite//acms//elections-37945-firebase-adminsdk-q5z8n-6d908ba9e5.json");
+
+var serviceAccount = require(__dirname+'/public/elections-37945-firebase-adminsdk-q5z8n-6d908ba9e5.json');
 
 admin.initializeApp({
   credential: admin.credential.cert(serviceAccount),
@@ -13,14 +18,10 @@ var firestore = admin.firestore();
 var Storage=admin.storage();
 // console.log('storage '+Object.getOwnPropertyNames(bucket));
 
-const port = 3003;
-var app = express();
+const port = process.env.PORT||3003;
 app.use(express.static(__dirname + '/public'));//will not load the static files on giving the path to it if absent.
 app.use(express.urlencoded())
 
-hbs.registerPartials(__dirname + '/views/partials')
-app.set('view engine', 'hbs');
-var Handlebars = require('hbs');
 
 app.listen(port, () => {
     console.log(`Server is up on port ${port}`);
