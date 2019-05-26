@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="utf-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+  <link  type="text/css" href="style.css">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+
+  <style>
+    body{
+   background: -webkit-linear-gradient(left,#D3D3D3,#fff); 
+}
+table, th, td {
+    border: none;
+    }
+    th, td {
+    padding: 15px;
+    }
+    th {
+  text-align: center;
+    }
+    
+  
+table{
+  text-align: center;
+  border-spacing: 1;
+  border-collapse: collapse;
+  background:#1c2761;
+  border-radius: 10px;
+  overflow: hidden;
+  margin: 0 auto;
+  position: relative;
+
+}
+table td, table th {
+  padding-left: 8px;
+}
+table thead tr {
+  height: 60px;
+}
+table tbody tr {
+  height: 50px;
+}
+table tbody tr:last-child {
+  border: 10;
+}
+tbody tr:hover {
+  color: #555555;
+  background-color: #f5f5f5;
+  cursor: pointer;
+}
+
+  </style>
+</head>
+<body>
+    <script>
+            function  dislpayConstituencies(){
+                var parent=document.getElementById("stats");
+                //parent.appendChild(document.createElement("li")).appendChild(document.createElement("a"));
+                var xhttp = new XMLHttpRequest();
+                        xhttp.onreadystatechange = function() {
+                            if (this.readyState == 4 && this.status == 200) {
+                                var list=JSON.parse(xhttp.response);
+                                //console.log(list);
+                                var cList=list['response'];
+                                for(var i=0;i<cList.length;i++){
+                                console.log(cList[i]);
+                                var option= parent.appendChild(document.createElement("li")).appendChild(document.createElement("a"));
+                                option.setAttribute("href","/stats?constituency="+cList[i]);
+                                option.innerHTML=cList[i];
+                                }
+                                parent.onclick="";
+                            }
+                        };
+                        xhttp.open("GET", "/const", true);
+                        xhttp.send();
+            }
+        </script>
+        <script>
+           // dislpayConstituencies()
+        </script>
+
+        <table >
+          <thead style="font-family:initial;color:#fff">
+            <th >Costituency</th>
+          </thead>
+          <tbody>
+          <tr>
+            <td><a href="/stats?constituency=Goshamahal">Goshamahal</a></td>
+          </tr>
+          <tr>
+            <td><a href="/stats?constituency=UPPAL">UPPAL</a></td>
+          </tr>
+          <tr>
+            <td><a href="/stats?constituency=Khairatabad">Khairatabad</a></td>
+          </tr>
+          <tr>
+            <td><a href="/stats?constituency=JUBILEE HILLS ">JUBILEE HILLS </a></td>
+          </tr>
+        </tbody>
+        </table>
+
+    
+    
+    </body>
+    </html>

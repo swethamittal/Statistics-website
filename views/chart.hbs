@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0/dist/Chart.min.js"></script>
+        <style>
+              body{
+   background: -webkit-linear-gradient(left,#D3D3D3,#fff); 
+}
+        </style>
+    </head>
+    <body>
+        <script >
+            var constituency="xyz";
+            console.log("chart.html");
+            //console.log({{constituency}})
+            {{#each candidates}}
+           var Voters_registered={{Voters_registered}}+"";
+           var Voters_count={{Voters_count}}+"";
+           var Vcount={{Vcount}};
+           console.log(Voters_registered+" "+Vcount);
+            {{/each}}
+            var parties=new Array();
+            var count=new Array();
+            {{#each partyCount}}
+            parties.push("{{party}}")
+            count.push({{count}})
+            {{/each}}
+            console.log(parties);
+            console.log(count);
+        </script>
+        {{!-- <canvas id="myChart" height="200px"></canvas> --}}
+        <div class="container">
+            <center><h1 >Constituency:{{#each candidates}}{{constituency}}{{/each}}</h1></center>
+        <div class="row">
+            <div class="col-xs-6">
+            <canvas id="myChart"  height="200"></canvas>
+        </div>
+        {{!-- </div> --}}
+        {{!-- <div class="row"> --}}
+        <div class="col-xs-6">
+            <canvas id="registeredbutnotvotedchart"  height="200" width="100"></canvas>
+        </div>
+        <div class="col-xs-6">
+            <canvas id="myChartbar"  height="200" width="100"></canvas>
+        </div>
+        </div>
+        </div>
+
+
+        {{!-- <h1>{{constituency}}</h1> --}}
+        
+       <script>
+        var ctx = document.getElementById("myChart").getContext('2d');  
+        var rbnv=document.getElementById("registeredbutnotvotedchart").getContext('2d');  
+        var cty = document.getElementById("myChartbar").getContext('2d'); 
+        var data=new Array();
+        data.push(Voters_count-Voters_registered);
+        data.push(Voters_registered);
+        console.log(data);
+        var labels=['citizens who did not register','citizens who registered'];
+        var myChart = new Chart(ctx, {
+            type: 'pie',
+            data: {
+                labels: labels,
+                datasets: [{
+                    label: 'Population', // Name the series
+                    data: data, // Specify the data values array
+                    backgroundColor: [ // Specify custom colors
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [ // Add custom color borders
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1 // Specify bar border width
+                }]
+            },
+            options: {
+            title:{
+                display: true,
+                position: "top",
+                text:"Number of citizens who registered",
+                fontSize: 18,
+                fontColor: "#111"
+            },
+            responsive: true, // Instruct chart js to respond nicely.
+            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+            }
+        });  
+
+        var data1=[Voters_registered-Vcount,Vcount];
+        var labels1=["Number of registered citizens who did not vote","Number of regsitered citizens who voted"];
+        var regnotvoted  = new Chart(rbnv, {
+            type: 'pie',
+            data: {
+                labels: labels1,
+                datasets: [{
+                    label: 'Population', // Name the series
+                    data: data1, // Specify the data values array
+                    backgroundColor: [ // Specify custom colors
+                        'rgba(255, 99, 132, 0.2)',
+                        'rgba(54, 162, 235, 0.2)',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [ // Add custom color borders
+                        'rgba(255,99,132,1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 1 // Specify bar border width
+                }]
+            },
+            options: {
+            title:{
+                display: true,
+                position: "top",
+                text:"Number of citizens who registered but did not vote",
+                fontSize: 18,
+                fontColor: "#111"
+            },
+            responsive: true, // Instruct chart js to respond nicely.
+            maintainAspectRatio: false, // Add to prevent default behaviour of full-width/height 
+            }
+        });
+
+        //Bar data
+
+        //BarGraph
+        //var ctl = document.getElementById("myChartbar").getContext("2d");
+            var myBarChart  = new Chart(cty, {
+            type: 'bar', 
+            data:{
+                labels: parties,
+                datasets: [{
+                    label: "Votes Recieved",
+                    data: count,
+                    backgroundColor: [
+                    'rgba(0, 99, 132, 0.6)',
+                    'rgba(30, 99, 132, 0.6)',
+                    'rgba(60, 99, 132, 0.6)',
+                    'rgba(90, 99, 132, 0.6)',
+                    'rgba(120, 99, 132, 0.6)',
+                    'rgba(150, 99, 132, 0.6)',
+                    'rgba(180, 99, 132, 0.6)',
+                    'rgba(210, 99, 132, 0.6)',
+                    'rgba(240, 99, 132, 0.6)'
+                     ],
+                    borderColor: [
+                        'rgba(0, 99, 132, 1)',
+                        'rgba(30, 99, 132, 1)',
+                        'rgba(60, 99, 132, 1)',
+                        'rgba(90, 99, 132, 1)',
+                        'rgba(120, 99, 132, 1)',
+                        'rgba(150, 99, 132, 1)',
+                        'rgba(180, 99, 132, 1)',
+                        'rgba(210, 99, 132, 1)',
+                        'rgba(240, 99, 132, 1)'
+                    ],
+                    borderWidth: 2,
+                }]
+            },
+            options : {
+                responsive: true,
+                maintainAspectRatio: false,
+                title: {
+                    display: true,
+                    position: "top",
+                    text: "Votes recieved by each party",
+                    fontSize: 18,
+                    fontColor: "#111"
+                },
+                legend: {
+                    display: true,
+                    position: "bottom",
+                    labels: {
+                    fontColor: "#333",
+                    fontSize: 16
+                    }
+                },
+                scales: {
+                    yAxes: [{
+                    ticks: {
+                        min: 0
+                    }
+                    }]
+                }
+                }
+            });
+        </script>
+
+    </body>
+</html>
