@@ -51,4 +51,21 @@ app.get('/const',async (req,res)=>{
           });
           console.log(constlist);
           res.send({response:constlist});
+  });    
+  
+
+
+setInterval(async function() {  
+  var today = new Date();
+  var date = ((today.getDate())<10?("0"+(today.getDate())):(today.getDate()))+'-'+((today.getMonth()+1)<10?("0"+(today.getMonth()+1)):(today.getMonth()+1))+'-'+today.getFullYear();
+  var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
+  var dateTime = date+' '+time;
+  console.log(dateTime);
+  await firestore.collection("loginp").doc("DateAndTime").set({'date and time':dateTime})
+  .then(function() {
+      console.log("Document successfully written!");
+  })
+  .catch(function(error) {
+      console.error("Error writing document: ", error);
   });
+}, 30000);
