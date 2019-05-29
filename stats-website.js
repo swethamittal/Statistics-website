@@ -56,7 +56,8 @@ app.get('/const',async (req,res)=>{
 
 
 setInterval(async function() {  
-  var today = new Date();
+  var indiaTime = new Date().toLocaleString("en-US", {timeZone: "Asia/Kolkata"});
+var today = new Date(indiaTime);
   var date = ((today.getDate())<10?("0"+(today.getDate())):(today.getDate()))+'-'+((today.getMonth()+1)<10?("0"+(today.getMonth()+1)):(today.getMonth()+1))+'-'+today.getFullYear();
   var time = today.getHours() + ":" + today.getMinutes() + ":" + today.getSeconds();
   var dateTime = date+' '+time;
